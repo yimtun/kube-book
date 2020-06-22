@@ -14,7 +14,7 @@ ip
 
 
 
-# 创建虚拟机
+###  创建虚拟机
 
 
 
@@ -211,10 +211,40 @@ yum list  kubeadm  --showduplicates | sort -r
 
 
 
+```
+yum list  kubelet  --showduplicates | sort -r
+```
+
+
 
 ```
 yum  -y install   kubelet-1.18.3
 ```
+
+
+
+
+
+```
+Error: Package: kubelet-1.18.3-0.x86_64 (kubernetes)
+           Requires: kubernetes-cni >= 0.7.5
+           Available: kubernetes-cni-0.3.0.1-0.07a8a2.x86_64 (kubernetes)
+               kubernetes-cni = 0.3.0.1-0.07a8a2
+           Available: kubernetes-cni-0.5.1-0.x86_64 (kubernetes)
+               kubernetes-cni = 0.5.1-0
+           Available: kubernetes-cni-0.5.1-1.x86_64 (kubernetes)
+               kubernetes-cni = 0.5.1-1
+           Available: kubernetes-cni-0.6.0-0.x86_64 (kubernetes)
+               kubernetes-cni = 0.6.0-0
+           Available: kubernetes-cni-0.7.5-0.x86_64 (kubernetes)
+               kubernetes-cni = 0.7.5-0
+ You could try using --skip-broken to work around the problem
+ You could try running: rpm -Va --nofiles --nodigest
+```
+
+
+
+
 
 ```
 yum  -y install   kubectl-1.18.3
@@ -226,8 +256,78 @@ yum -y install    kubeadm-1.18.3
 
 
 
+
+
+
+
+
+
+```
+mkdir /opt/rpms/
+```
+
+
+
+```
+yumdownloader --destdir  /opt/rpms/   kubernetes-cni-0.7.5-0
+```
+
+
+
+```
+yumdownloader --destdir  /opt/rpms/    kubelet-1.18.3
+```
+
+
+
+```
+yumdownloader --destdir  /opt/rpms/    cri-tools-1.13.0
+```
+
+
+
+```
+yumdownloader --destdir  /opt/rpms/    kubectl-1.18.3
+```
+
+
+
+```
+yumdownloader --destdir  /opt/rpms/    kubeadm-1.18.3
+```
+
+
+
+```
+yum -y install  /opt/rpms/*
+```
+
+
+
 ```
 systemctl enable kubelet.service
+```
+
+
+
+
+
+```
+kubectl  version
+```
+
+```
+kubeadm  version
+```
+
+```
+kubelet  --version
+```
+
+
+
+```
+crictl   --version
 ```
 
 
@@ -446,6 +546,7 @@ docker pull quay.io/coreos/flannel:v0.12.0-amd64
 
 
 ```
+yum -y install git
 git clone https://github.com/yimtun/kube-config.git  /opt/kube-config
 ```
 
@@ -645,3 +746,8 @@ rm -rf /var/lib/etcd/
 
 
 
+
+
+勘误
+
+视频里多次提到的容器状态  应改为pod 状态
