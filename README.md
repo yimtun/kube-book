@@ -30,18 +30,41 @@ Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规�
 - 基础拆解: 
 
   - 第二式  [将etcd独立部署](./etcd/etcd-add.md)
+  
   - 第三式  [让kubeadm使用自己创建的证书](./certs/2-暴力拆解第二式-使用自己的证书.md) 
       - 1  [nginx证书示例](./certs/https-双向认证.md)
      - 2  [创建并使用证书](./certs/2-暴力拆解第二式-使用自己的证书.md)
+     
   - 第四式  [让kubeadm使用自己创建的证书](./certs/2-暴力拆解第二式-使用自己的证书.md) 
+  
   - 第五式  添加一个node节点 并分析添加过程
       - 1 [指定bootstrap tokens创建一个集群](./kubelet/define-token-install-cluster.md)
       - 2 [查看kubeadm init 输出信息](./kubelet/output.md)
       - 3 [使用kubeadm join 添加一个node](./kubelet/kubeadm-join-node.md)
       - 4  [观察bootstrap token 权限](./kubelet/kubelet.md)
       - 5  [add node 手动](./kubelet/add-node.md)
+      
   - 第六式  拆解kube-proxy
+    
       - [观察当前以daemonset运行的kube-proxy](./kube-proxy/daemonset-kube-proxy.md)
+
+  - 第七式 kube-apiserver
+    
+      - [kube-apiserver](./kube-apiserver/kube-apiserver.md)
+  - 第八式 kube-controller-manager
+    
+      - [kube-controller-manager](./kube-controller-manager/kube-controller-manager.md)
+  - 第九式 kube-scheduler
+    
+      - [kube-scheduler](./kube-scheduler/kube-scheduler.md)
+    
+  - 第十式 拆解CNI
+    
+      - flanneld
+      
+          - [查看当前flaneld信息](./cni/flanneld.md)
+          - [将flannel作为插件cni直接运行在宿主机上](./cni/run-flanneld.md)
+      
   - 第七式  [kube-apiserver](./kube-api/kube-api.md) 
   
 
