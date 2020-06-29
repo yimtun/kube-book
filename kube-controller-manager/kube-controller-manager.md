@@ -348,11 +348,182 @@ X509v3 Extended Key Usage:
 
 
 
+
+
+
+
+
+
+#### 解码 client-key-data
+
+
+
+```
+echo 'LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBdHd5UDZJL0N0cGo1Q0pRNkpSclFTTHNXb1poSGZMTkRTYlZ6NWlaTDBvVktRcGtNCmZxMjFXL1dYenJTRHNRU2xMQU5jNHo3U21RdDc5S2hGVXdicVdqcDhSbmxDc2Q0c0x6c291R0htZGFiUHZjODAKOE1KZkRSUStLdUQzS3p4Nyt5eDJETEpZcEkwbUxOQmVLTkYvdjcxZUtzMkN1djM2c2I3RE5XdE9IWHh0cXlEWQpFZjYxeWxWbVY1cWdFWlBJblVvOVFJeUlVMFh5ZTZURE1jWk94S1lsbkdDaCtVbDFCUjkvSnROMXdBMUEyNVdBCk9sK2o2dTBDbDZnT0p6eSsrQ1BqcG5qS3JkOWYzb0c3REkwcnJoV2M2akhTVXY2S3Y5MElwMUhxeGw3c0xjVysKc2w3TklRb0xSZmVYc3ZHMnlNTFJpV1N6cXFOaVJQbXgvRlJQV1FJREFRQUJBb0lCQUFjVDMwU1l1bWloQlpBRgpXekl3RlRtYXNrZFJRZ0phVkJHM2lHR3Z2V0xJY0pTZW9sTUxtR1dUMjJqTXBnTGtNUmJBa29qZTF2bS83ZTBKCnpKUm5RZ3gzRW5NUElUc0xZaDM1Wlp1cmZXT3pMWGtqVitLdlFVbWFMTVV2cVo3c1djYmVjem9PYzByNWdpNWQKYUNhZjR4YWcxZEZGM1BZcDk5V0RrTHl5QjNVd1Y2NVlCRjBQbXpVNDBYejEzMWk2RlhTZG9taDhFMlJuY09vZgo3QUdWS09TWExqNzkxcUFjS1RhK0laY2JNUHFTL0NlMldDbko5TjFrQzNkbHlMWTg4NE5vSnpiaFhtQWpKd0ROClBwMEtIL0hpbkFpRFRkUDRxbEVNY0FoSmlBa3l4UFpHWU1nbTZvSzNJeE90ZDJDUVJvSGNIekZVUVYwcG1Wb2QKNERTMUsxa0NnWUVBeXA5dUNzS01weGRMMUJtYTdJam4rblgrSG0rNkhLK2x0cnFxWnVxZVRFblFta2NuRmovSQpMMzJoMDFLOHdnaDdpZkFuNkVFaDIwbGE0Z2pLWk9RcTZ4OTJwTG5RZlZrdklud3hNVkRNRWJ3dkdEbHJpS0JKClVrbktsZXNkbitvWWJsZVFqQjBMRGdQZ3BmM2lKd3lIZkEyOVZyZFh4T3lsc0VUcEpkUHFlc3NDZ1lFQTUwVWMKbXhldXBWaTNxeDN2NlFSaWNTT000Q3JqWjhCdlo5aFUzZGZvNitBT0NNbzBWTVdNYytqeU9MeGVuN3pUZ29TSQplcW1lNTV4dGVCcGJoMUNrSTJzeXZVMzgxY1FSSEF6U1VJWWl5NHcyVms2azZqTmRnRGYzUTVWMFQyOFYrNXdWClhtQUVFakhPZmtEMUFWRDdaWTFMU0pDa014ZzJCQS9uR0I3NjVlc0NnWUFEZEJZdkRzUFE4VCswbkw4Y092VWgKT3JPYkZ6Sm4zTUtKUzhNdHY5LzAwdWxBUitndG8rYW9rSTZhaUhWNUpTWGQ0djc3SVdrUFVML0F6SCtPbXFqMAptdk90dVJFSm9lU0F4UGNkclEvZFdZUy85L0tTUUpFZld1eWVBNFRjdmVPdXRjVmI3ZjdMUFZ1dDJKYnJMWFo5CnNjcEJXUnlnMlp1MVZtZFc0cmJEWXdLQmdRRE1qWlpsbnlhNzNLSm5XWTFQUHErTGZuUWwrZ2sxUlVIRVNkV1cKZWxmcitUcXdqNWlGdWswbVlFMk4zUjZjanJsTlljZ05KbVlFV1ptQmQxNnBhcXdqSDdlN05IV0M1VzUwcnVwKwppb1hRSDI0WUhHdEZNclZxcVJXczAwNFN6Q0JYY1pCODd0UHErOTYyVU9Iamppc3RnVEdyTnpQa2RXK2hYQ2Q4CmNEcGVqUUtCZ0VHcmRnRUdqMVJjYUllNWRkMG5EMFh4ZHZ3dmlkZWNhVnl3bHprbWUzY1ZzNUk5SU4rRnNaYXAKWmxRYnJGenFhUnAzUDFIcnlISnpzN3ZXU1ZtdjI2cUFReXd0SzdUOVR2aDhXcU45QTRCVjQ5d1F2VnI0Z0dTKwpUWEQ2SGQ5WGpZUUhIdHF3cTFtdE5DVFpzRlUweWkwNUh3d1V0ZzI5dTZ3RmZlYkFNMFJzCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==' | base64 -d
+```
+
+
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAtwyP6I/Ctpj5CJQ6JRrQSLsWoZhHfLNDSbVz5iZL0oVKQpkM
+fq21W/WXzrSDsQSlLANc4z7SmQt79KhFUwbqWjp8RnlCsd4sLzsouGHmdabPvc80
+8MJfDRQ+KuD3Kzx7+yx2DLJYpI0mLNBeKNF/v71eKs2Cuv36sb7DNWtOHXxtqyDY
+Ef61ylVmV5qgEZPInUo9QIyIU0Xye6TDMcZOxKYlnGCh+Ul1BR9/JtN1wA1A25WA
+Ol+j6u0Cl6gOJzy++CPjpnjKrd9f3oG7DI0rrhWc6jHSUv6Kv90Ip1Hqxl7sLcW+
+sl7NIQoLRfeXsvG2yMLRiWSzqqNiRPmx/FRPWQIDAQABAoIBAAcT30SYumihBZAF
+WzIwFTmaskdRQgJaVBG3iGGvvWLIcJSeolMLmGWT22jMpgLkMRbAkoje1vm/7e0J
+zJRnQgx3EnMPITsLYh35ZZurfWOzLXkjV+KvQUmaLMUvqZ7sWcbeczoOc0r5gi5d
+aCaf4xag1dFF3PYp99WDkLyyB3UwV65YBF0PmzU40Xz131i6FXSdomh8E2RncOof
+7AGVKOSXLj791qAcKTa+IZcbMPqS/Ce2WCnJ9N1kC3dlyLY884NoJzbhXmAjJwDN
+Pp0KH/HinAiDTdP4qlEMcAhJiAkyxPZGYMgm6oK3IxOtd2CQRoHcHzFUQV0pmVod
+4DS1K1kCgYEAyp9uCsKMpxdL1Bma7Ijn+nX+Hm+6HK+ltrqqZuqeTEnQmkcnFj/I
+L32h01K8wgh7ifAn6EEh20la4gjKZOQq6x92pLnQfVkvInwxMVDMEbwvGDlriKBJ
+UknKlesdn+oYbleQjB0LDgPgpf3iJwyHfA29VrdXxOylsETpJdPqessCgYEA50Uc
+mxeupVi3qx3v6QRicSOM4CrjZ8BvZ9hU3dfo6+AOCMo0VMWMc+jyOLxen7zTgoSI
+eqme55xteBpbh1CkI2syvU381cQRHAzSUIYiy4w2Vk6k6jNdgDf3Q5V0T28V+5wV
+XmAEEjHOfkD1AVD7ZY1LSJCkMxg2BA/nGB765esCgYADdBYvDsPQ8T+0nL8cOvUh
+OrObFzJn3MKJS8Mtv9/00ulAR+gto+aokI6aiHV5JSXd4v77IWkPUL/AzH+Omqj0
+mvOtuREJoeSAxPcdrQ/dWYS/9/KSQJEfWuyeA4TcveOutcVb7f7LPVut2JbrLXZ9
+scpBWRyg2Zu1VmdW4rbDYwKBgQDMjZZlnya73KJnWY1PPq+LfnQl+gk1RUHESdWW
+elfr+Tqwj5iFuk0mYE2N3R6cjrlNYcgNJmYEWZmBd16paqwjH7e7NHWC5W50rup+
+ioXQH24YHGtFMrVqqRWs004SzCBXcZB87tPq+962UOHjjistgTGrNzPkdW+hXCd8
+cDpejQKBgEGrdgEGj1RcaIe5dd0nD0XxdvwvidecaVywlzkme3cVs5I9IN+FsZap
+ZlQbrFzqaRp3P1HryHJzs7vWSVmv26qAQywtK7T9Tvh8WqN9A4BV49wQvVr4gGS+
+TXD6Hd9XjYQHHtqwq1mtNCTZsFU0yi05HwwUtg29u6wFfebAM0Rs
+-----END RSA PRIVATE KEY-----
+```
+
+
+
+------------------
+
+
+
+直接将输出写入文件
+
+```
+echo 'LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBdHd5UDZJL0N0cGo1Q0pRNkpSclFTTHNXb1poSGZMTkRTYlZ6NWlaTDBvVktRcGtNCmZxMjFXL1dYenJTRHNRU2xMQU5jNHo3U21RdDc5S2hGVXdicVdqcDhSbmxDc2Q0c0x6c291R0htZGFiUHZjODAKOE1KZkRSUStLdUQzS3p4Nyt5eDJETEpZcEkwbUxOQmVLTkYvdjcxZUtzMkN1djM2c2I3RE5XdE9IWHh0cXlEWQpFZjYxeWxWbVY1cWdFWlBJblVvOVFJeUlVMFh5ZTZURE1jWk94S1lsbkdDaCtVbDFCUjkvSnROMXdBMUEyNVdBCk9sK2o2dTBDbDZnT0p6eSsrQ1BqcG5qS3JkOWYzb0c3REkwcnJoV2M2akhTVXY2S3Y5MElwMUhxeGw3c0xjVysKc2w3TklRb0xSZmVYc3ZHMnlNTFJpV1N6cXFOaVJQbXgvRlJQV1FJREFRQUJBb0lCQUFjVDMwU1l1bWloQlpBRgpXekl3RlRtYXNrZFJRZ0phVkJHM2lHR3Z2V0xJY0pTZW9sTUxtR1dUMjJqTXBnTGtNUmJBa29qZTF2bS83ZTBKCnpKUm5RZ3gzRW5NUElUc0xZaDM1Wlp1cmZXT3pMWGtqVitLdlFVbWFMTVV2cVo3c1djYmVjem9PYzByNWdpNWQKYUNhZjR4YWcxZEZGM1BZcDk5V0RrTHl5QjNVd1Y2NVlCRjBQbXpVNDBYejEzMWk2RlhTZG9taDhFMlJuY09vZgo3QUdWS09TWExqNzkxcUFjS1RhK0laY2JNUHFTL0NlMldDbko5TjFrQzNkbHlMWTg4NE5vSnpiaFhtQWpKd0ROClBwMEtIL0hpbkFpRFRkUDRxbEVNY0FoSmlBa3l4UFpHWU1nbTZvSzNJeE90ZDJDUVJvSGNIekZVUVYwcG1Wb2QKNERTMUsxa0NnWUVBeXA5dUNzS01weGRMMUJtYTdJam4rblgrSG0rNkhLK2x0cnFxWnVxZVRFblFta2NuRmovSQpMMzJoMDFLOHdnaDdpZkFuNkVFaDIwbGE0Z2pLWk9RcTZ4OTJwTG5RZlZrdklud3hNVkRNRWJ3dkdEbHJpS0JKClVrbktsZXNkbitvWWJsZVFqQjBMRGdQZ3BmM2lKd3lIZkEyOVZyZFh4T3lsc0VUcEpkUHFlc3NDZ1lFQTUwVWMKbXhldXBWaTNxeDN2NlFSaWNTT000Q3JqWjhCdlo5aFUzZGZvNitBT0NNbzBWTVdNYytqeU9MeGVuN3pUZ29TSQplcW1lNTV4dGVCcGJoMUNrSTJzeXZVMzgxY1FSSEF6U1VJWWl5NHcyVms2azZqTmRnRGYzUTVWMFQyOFYrNXdWClhtQUVFakhPZmtEMUFWRDdaWTFMU0pDa014ZzJCQS9uR0I3NjVlc0NnWUFEZEJZdkRzUFE4VCswbkw4Y092VWgKT3JPYkZ6Sm4zTUtKUzhNdHY5LzAwdWxBUitndG8rYW9rSTZhaUhWNUpTWGQ0djc3SVdrUFVML0F6SCtPbXFqMAptdk90dVJFSm9lU0F4UGNkclEvZFdZUy85L0tTUUpFZld1eWVBNFRjdmVPdXRjVmI3ZjdMUFZ1dDJKYnJMWFo5CnNjcEJXUnlnMlp1MVZtZFc0cmJEWXdLQmdRRE1qWlpsbnlhNzNLSm5XWTFQUHErTGZuUWwrZ2sxUlVIRVNkV1cKZWxmcitUcXdqNWlGdWswbVlFMk4zUjZjanJsTlljZ05KbVlFV1ptQmQxNnBhcXdqSDdlN05IV0M1VzUwcnVwKwppb1hRSDI0WUhHdEZNclZxcVJXczAwNFN6Q0JYY1pCODd0UHErOTYyVU9Iamppc3RnVEdyTnpQa2RXK2hYQ2Q4CmNEcGVqUUtCZ0VHcmRnRUdqMVJjYUllNWRkMG5EMFh4ZHZ3dmlkZWNhVnl3bHprbWUzY1ZzNUk5SU4rRnNaYXAKWmxRYnJGenFhUnAzUDFIcnlISnpzN3ZXU1ZtdjI2cUFReXd0SzdUOVR2aDhXcU45QTRCVjQ5d1F2VnI0Z0dTKwpUWEQ2SGQ5WGpZUUhIdHF3cTFtdE5DVFpzRlUweWkwNUh3d1V0ZzI5dTZ3RmZlYkFNMFJzCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==' | base64 -d > /opt/controller-manager.key
+```
+
+
+
+
+
+# 查看权限相关
+
+
+
+> https://v1-17.docs.kubernetes.io/docs/setup/best-practices/certificates/#configure-certificates-for-user-accounts
+
+
+
+cn
+
+system:kube-controller-manager
+
+
+
+###  关联的clusterrolebinding
+
+```
+kubectl get clusterrolebinding -o custom-columns='Name:metadata.name,Sub:subjects'  | grep 'system:kube-controller-manage'
+```
+
+
+
+```
+system:kube-controller-manager                         [map[apiGroup:rbac.authorization.k8s.io kind:User name:system:kube-controller-manager]]
+```
+
+--------------
+
+
+
+```
+kubectl  get clusterrolebinding  system:kube-controller-manager -o yaml
+```
+
+
+
+```
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:kube-controller-manager
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:kube-controller-manager
+```
+
+
+
+
+
+### 关联的 rrolebinding
+
+```
+kubectl get rolebinding -o custom-columns='Name:metadata.name,Sub:subjects'  -A | grep 'system:kube-controller-manage'
+```
+
+```
+system::extension-apiserver-authentication-reader   [map[apiGroup:rbac.authorization.k8s.io kind:User namesystem:kube-controller-manager] map[apiGroup:rbac.authorization.k8s.io kind:User name:system:kube-scheduler]]
+system::leader-locking-kube-controller-manager      [map[apiGroup:rbac.authorization.k8s.io kind:User namesystem:kube-controller-manager] map[kind:ServiceAccount name:kube-controller-manager namespace:kube-system]]
+```
+
+
+
+```
+kubectl  get rolebindings system::extension-apiserver-authentication-reader -n kube-system  -o yaml
+```
+
+
+
+```
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:kube-controller-manager
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:kube-scheduler
+```
+
+---------------
+
+
+
+```
+kubectl  get rolebindings system::leader-locking-kube-controller-manager -n kube-system  -o yaml
+```
+
+
+
+```
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: system::leader-locking-kube-controller-manager
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:kube-controller-manager
+- kind: ServiceAccount
+  name: kube-controller-manager
+  namespace: kube-system
+```
+
 # 手动创建 客户端证书
 
 
 
 ```
+rm -rf  /kube-controller-manager-certs
 mkdir  /kube-controller-manager-certs
 cd  /kube-controller-manager-certs
 ```
@@ -400,6 +571,21 @@ openssl x509 -req -in kube-controller-manager.csr  \
 
 
 
+------------
+
+
+
+```
+openssl x509 -in /kube-controller-manager-certs/kube-controller-manager.crt  -noout -text
+```
+
+```
+Issuer: CN=kubernetes
+Subject: CN=system:kube-controller-manager
+```
+
+
+
 # 创建kubeconfig
 
 
@@ -435,7 +621,7 @@ kubectl config set-credentials system:kube-controller-manager \
 ```
 kubectl config set-context system:kube-controller-manager@kubernetes \
   --cluster=kubernetes \
-  --user=system:system:kube-controller-manager \
+  --user=system:kube-controller-manager \
   --kubeconfig=/etc/kubernetes/controller-manager.conf
 ```
 
@@ -448,43 +634,24 @@ kubectl config use-context system:kube-controller-manager@kubernetes \
 
 
 
+------------
+
+
+
+
+
+
+
 # 验证kubeconfig 
 
-重启静态pod controller-manager  
 
 
+验证kubeconfig
 
-验证手动创建的kubeconfig
-
-```
-mv /etc/kubernetes/manifests/kube-controller-manager.yaml  /opt/
-```
 
 
 ```
-kubectl  get componentstatuses  controller-manager
-```
-
-
-```
-NAME                 STATUS      MESSAGE                                                                                     ERROR
-controller-manager   Unhealthy   Get http://127.0.0.1:10252/healthz: dial tcp 127.0.0.1:10252: connect: connection refused 
-```
-
------------
-
-
-```
-mv /opt/kube-controller-manager.yaml /etc/kubernetes/manifests/
-```
-```
-kubectl  get componentstatuses  controller-manager 
-```
-​       
-
-```
-NAME                 STATUS    MESSAGE   ERROR
-controller-manager   Healthy   ok
+kubectl  get all  --kubeconfig=/etc/kubernetes/controller-manager.conf
 ```
 
 
@@ -520,9 +687,8 @@ ExecStart=/usr/local/bin/kube-controller-manager \\
 --service-account-private-key-file=/etc/kubernetes/pki/sa.key \\
 --service-cluster-ip-range=10.96.0.0/12 \\
 --use-service-account-credentials=true
-Restart=on-failure
-RestartSec=5
-Type=notify
+Restart=always
+RestartSec=10s
 LimitNOFILE=65536
 
 [Install]
@@ -536,6 +702,11 @@ EOF
 
 ```
 cat /usr/lib/systemd/system/kube-controller-manager.service
+```
+
+
+
+```
 [Unit]
 Description=Kubernetes API Server
 Documentation=https://github.com/GoogleCloudPlatform/kubernetes
@@ -561,9 +732,8 @@ ExecStart=/usr/local/bin/kube-controller-manager \
 --service-account-private-key-file=/etc/kubernetes/pki/sa.key \
 --service-cluster-ip-range=10.96.0.0/12 \
 --use-service-account-credentials=true
-Restart=on-failure
-RestartSec=5
-Type=notify
+Restart=always
+RestartSec=10s
 LimitNOFILE=65536
 
 [Install]
@@ -599,5 +769,40 @@ controller-manager   Unhealthy   Get http://127.0.0.1:10252/healthz: dial tcp 12
 
 ```
 systemctl  start kube-controller-manager
+```
+
+```
+systemctl  status kube-controller-manager
+```
+
+
+
+----------------
+
+```
+kubectl  get componentstatuses  controller-manager 
+```
+
+
+
+```
+NAME                 STATUS    MESSAGE   ERROR
+controller-manager   Healthy   ok    
+```
+
+---------------
+
+
+
+```
+systemctl  enable  kube-controller-manager
+```
+
+
+
+# 重启测试
+
+```
+reboot
 ```
 
