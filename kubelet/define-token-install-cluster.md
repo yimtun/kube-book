@@ -1,8 +1,16 @@
 
 
-# 1 生成bootstrapper token的方法
+> https://v1-18.docs.kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/#bootstrap-tokens
 
 
+
+
+
+# 1 事先生成bootstrapper token的方法
+
+
+
+方法1
 
 ```
 openssl rand -hex 3
@@ -18,7 +26,19 @@ openssl rand -hex 8
 
 
 
+方法2    在一个装有 kubeadm 的机器上生成
+
+```
+kubeadm token generate
+```
+
+
+
+
+
 下面配置文件里的 token  即为   usvieq.2zg86228emymgcd4
+
+
 
 
 
@@ -102,6 +122,19 @@ EOF
 
 
 # 3 指定 bootstrapTokens部署k8s
+
+清理环境
+
+
+
+```
+virsh  undefine 192.168.3.101
+virsh  destroy  192.168.3.101
+rm -rf /kvm/image/192.168.3.101.qcow2
+systemctl restart libvirtd
+```
+
+
 
 使用 外置etcd
 
@@ -689,7 +722,7 @@ kubeadm join 192.168.3.101:6443 --token usvieq.2zg86228emymgcd4 \
 
 
 
---discovery-token-ca-cert-hash  注意每次的输出会不同
+注意 --discovery-token-ca-cert-hash  输出会不同
 
 ----------------------
 
@@ -1019,3 +1052,10 @@ ETCDCTL_API=3 etcdctl \
 --key=/etc/etcd/certs/etcd-client.key  \
 del / --prefix
 ```
+
+
+
+```
+reboot
+```
+

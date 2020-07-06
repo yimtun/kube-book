@@ -1,0 +1,20 @@
+1)	忘记token
+[root@k8s-master ~]# kubeadm token list
+TOKEN                      TTL       
+m1g6uz.mfug2zq46n9izb04   22h
+[root@k8s-node1 ~]# kubeadm  join  192.168.126.200:6443 --token  m1g6uz.mfug2zq46n9izb04  
+--discovery-token-unsafe-skip-ca-verification
+
+
+
+1)	token过期：
+[root@k8s-master ~]# kubeadm token generate
+suzka0.9uhg2pcmr5c9ig6s
+[root@k8s-master ~]# kubeadm token create  suzka0.9uhg2pcmr5c9ig6s --print-join-command  --ttl=0
+将会打印出node节点登录命令：
+kubeadm join 192.168.126.200:6443 --token mslola.rzajtsvuwcv6f6k5    
+--discovery-token-ca-cert-hash sha256:91cd82fd9f897448e83baadea9aee29d31553b2c7ab2574744fd1068c60adfb4
+[root@k8s-master ~]# kubeadm join 192.168.126.200:6443 --token mslola.rzajtsvuwcv6f6k5  
+           --discovery-token-ca-cert-hash sha256:91cd82fd9f897448e83baadea9aee29d31553b2c7ab2574744fd1068c60adfb4       
+
+

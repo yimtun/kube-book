@@ -282,48 +282,84 @@ crictl   --version
 # 192.168.3.103 作为node 加入到集群
 
 ```
-运行kubeadm init 输出的 加入集群为work 节点的命令
+运行kubeadm init 输出的 加入集群为work 节点的命令  --node-name  xxxx
+```
+
+ 
+
+
+
+
+
+192.168.3.103 上执行
+
+---------------------
+
+```
+kubeadm join 192.168.3.101:6443 --node-name 192.168.3.103 --token usvieq.2zg86228emymgcd4 --discovery-token-ca-cert-hash sha256:f15e6eefb83447b09aed5e0d34b061ba2240426aec1649366153add3ca46a787
 ```
 
 
 
 ```
-kubeadm join 192.168.3.101:6443 --node-name 192.168.3.103--token usvieq.2zg86228emymgcd4
---discovery-token-ca-cert-hash
-sha256:f15e6eefb83447b09aed5e0d34b061ba2240426aec1649366153add3ca46a787 
+  W0702 12:41:27.932584   13037 join.go:346] [preflight] WARNING: JoinControlPane.controlPlane settings will be ignored when control-plane flag is not set.
+[preflight] Running pre-flight checks
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'
+[kubelet-start] Downloading configuration for the kubelet from the "kubelet-config-1.18" ConfigMap in the kube-system namespace
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+```
+
+---------------
+
+在192.168.3.101上查看
+
+```
+kubectl get nodes
 ```
 
 
 
-# token过期 重新创建 并打印加入集群为node 节点的命令
+```
+NAME            STATUS   ROLES    AGE     VERSION
+192.168.3.101   Ready    master   14h     v1.18.3
+192.168.3.103   Ready    <none>   2m53s   v1.18.3
+```
 
 
 
 
+
+
+
+#  查看是否过期
+
+ 
 
 192.168.3.101 
 
 
 
-
-
 ```
-kubeadm token create --print-join-command
-```
-
-
-
-```
-kubeadm join 192.168.3.101:6443 --node-name 192.168.3.103 --token gwypur.4axtvuagk01xw20w   --discovery-token-ca-cert-hash sha256:c5b32961b3001c3bf921ac95887c01fc8e50d4bc44db6a109ed532f37a959ed1
+kubeadm token list
 ```
 
 
 
 
 
+-----------------
 
-
-补充
+# 补充
 
 --discovery-token-ca-cert-hash 的值 可以使用下面方式计算得出
 
@@ -334,22 +370,10 @@ openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt|openssl rsa -pubin -outform 
 
 
 ```
-c5b32961b3001c3bf921ac95887c01fc8e50d4bc44db6a109ed532f37a959ed1
+f15e6eefb83447b09aed5e0d34b061ba2240426aec1649366153add3ca46a787
 ```
 
 
-
-kubeadm token create  命令相当于创建了如下 secret
-
-
-
-```
-kubectl  get -n kube-system secrets  bootstrap-token-gwypur
-```
-
-还会 将相关的信息写入 cluster-info ConfigMap
-
-extra
 
 
 
@@ -358,6 +382,23 @@ extra
 # undo
 
 192.168.3.101
+
+```
+kubectl drain 192.168.3.103 --ignore-daemonsets
+```
+
+-----------
+
+```
+kubectl  get node 192.168.3.103 
+```
+
+```
+NAME            STATUS                     ROLES    AGE   VERSION
+192.168.3.103   Ready,SchedulingDisabled   <none>   25m   v1.18.3
+```
+
+--------------
 
 ```
 kubectl  delete node 192.168.3.103
@@ -369,5 +410,106 @@ kubectl  delete node 192.168.3.103
 
 ```
 kubeadm  reset -f
+```
+
+```
+reboot
+```
+
+
+
+# redo
+
+
+
+
+
+查看token
+
+192.168.3.101
+
+```
+kubeadm token list
+```
+
+```
+TOKEN                     TTL         EXPIRES                     USAGES                   DESCRIPTION                                                EXTRA GROUPS
+usvieq.2zg86228emymgcd4   9h          2020-07-02T22:14:22+08:00   authentication,signing   <none>                                                     system:bootstrappers:kubeadm:default-node-token
+```
+
+
+
+
+
+---------------
+
+
+
+# 重新生成一个 bootstrap token
+
+
+
+方法1 
+
+```
+kubeadm token generate
+```
+
+```
+3ts70s.tq0aakgnixpbb171
+```
+
+----------------
+
+```
+kubeadm token create  3ts70s.tq0aakgnixpbb171 --print-join-command  --ttl=0
+```
+
+
+
+方法2 
+
+上面两个步骤合成一个 
+
+```
+kubeadm token create —print-join-command --ttl=0
+```
+
+
+
+
+
+说明
+
+kubeadm token create  命令相当于创建了如下 secret
+
+```
+kubectl  get -n kube-system secrets  bootstrap-token-xxx
+```
+
+
+
+```
+还会 将相关的信息写入 名字为 cluster-info 的 ConfigMap      ns 名字是  kube-public
+```
+
+
+
+```
+kubectl  get -n kube-public  configmaps  cluster-info -o yaml
+```
+
+
+
+
+
+
+
+# 加入集群不验证ca证书
+
+
+
+```
+kubeadm  join  192.168.3.101:6443 --node-name 192.168.3.103 --token  usvieq.2zg86228emymgcd4  --discovery-token-unsafe-skip-ca-verification
 ```
 

@@ -79,7 +79,7 @@ system:bootstrappers:kubeadm:default-node-token
 
 ```
 echo 'MjAyMC0wNi0yNlQxNDo1NzozMyswODowMA==' | base64 -d
-2020-06-26T14:57:33+08:00
+2020-07-04T10:03:11+08:00
 ```
 
 
@@ -130,7 +130,11 @@ true
 
 
 
-> https://k8smeetup.github.io/docs/admin/kubelet-tls-bootstrapping/
+> https://v1-18.docs.kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bootstrapping/#authorize-kubelet-to-create-csr
+
+
+
+
 
 
 
@@ -154,12 +158,6 @@ token usvieq.2zg86228emymgcd4 属于组system:bootstrappers:kubeadm:default-node
 
 RBAC 基于角色的访问控制     
 
-角色是权限的集合      有两种  role   clusterrole
-
-角色绑定 将角色和用户关联 从而使用户具有角色所关联的权限   也有两种 rolebinding   clusterrolebinding
-
-Group 算是用户的一种  可以被赋予一定的权限
-
 
 
 下面就以这个组名 system:bootstrappers:kubeadm:default-node-token  为切入点，观察这个group 被赋予的哪些权限
@@ -168,10 +166,14 @@ Group 算是用户的一种  可以被赋予一定的权限
 
 
 
+过滤出 同组 system:bootstrappers:kubeadm:default-node-token 相关的 clusterrolebinding
+
+
+
 -------------------
 
 ```
-kubectl get clusterrolebinding -o custom-columns='Name:metadata.name,xx:subjects'  -n kube-system | grep 'system:bootstrappers:kubeadm:default-node-token'
+kubectl get clusterrolebinding -o custom-columns='Name:metadata.name,Subjects:subjects'  | grep 'system:bootstrappers:kubeadm:default-node-token'
 ```
 
 
@@ -198,10 +200,14 @@ kubeadm:node-autoapprove-bootstrap                     [map[apiGroup:rbac.author
 
 ------------
 
+```
+yum -y install jq
+```
+
 
 
 ```
-kubectl  -n kube-system  get clusterrole kubeadm:get-nodes -o json | jq .rules
+kubectl    get clusterrole kubeadm:get-nodes -o json | jq .rules
 ```
 
 
@@ -229,7 +235,7 @@ kubectl  -n kube-system  get clusterrole kubeadm:get-nodes -o json | jq .rules
 ---------
 
 ```
-kubectl  -n kube-system  get clusterrole system:node-bootstrapper -o json | jq .rules
+kubectl    get clusterrole system:node-bootstrapper -o json | jq .rules
 ```
 
 
@@ -258,7 +264,7 @@ kubectl  -n kube-system  get clusterrole system:node-bootstrapper -o json | jq .
 
 
 ```
-kubectl  -n kube-system  get clusterrole system:certificates.k8s.io:certificatesigningrequests:nodeclient -o json | jq .rules
+kubectl   get clusterrole system:certificates.k8s.io:certificatesigningrequests:nodeclient -o json | jq .rules
 ```
 
 
@@ -285,8 +291,14 @@ kubectl  -n kube-system  get clusterrole system:certificates.k8s.io:certificates
 
 
 
+
+
+过滤出 同组 system:bootstrappers:kubeadm:default-node-token 相关的 rolebinding
+
+
+
 ```
-kubectl get rolebinding -o custom-columns='Name:metadata.name,xx:subjects'  -n kube-system | grep 'system:bootstrappers:kubeadm:default-node-token'
+kubectl get rolebinding -o custom-columns='Name:metadata.name,Subjects:subjects'  -A | grep 'system:bootstrappers:kubeadm:default-node-token'	
 ```
 
 
@@ -323,6 +335,12 @@ rules:
   - configmaps
   verbs:
   - get
+```
+
+
+
+```
+kubectl  get -n kube-system  configmaps  kube-proxy   -o yaml
 ```
 
 
@@ -372,30 +390,6 @@ rules:
 
 
 
-
-# useage  quick
-
-
-
-```
-kubectl explain svc --recursive
-```
-
-```
-kubectl get clusterrolebinding -o custom-columns='NAME:subjects'  -n kube-system
-```
-
-
-
-```
-kubectl get clusterrolebinding -o custom-columns='Name:metadata.name,xx:subjects'  -n kube-system
-```
-
-
-
-```
-kubectl get clusterrolebinding -o custom-columns='NAME:subjects,xx:name'  -n kube-system  | grep 'system:bootstrappers:kubeadm:default-node-token'
-```
 
 
 

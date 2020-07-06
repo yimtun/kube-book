@@ -6,6 +6,22 @@
 
 
 
+> https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+
+
+
+# 还原默认环境
+
+```
+kubectl  delete -f /opt/metrics-yaml/1.8+/
+```
+
+
+
+```
+kubectl taint node   192.168.3.101   node-role.kubernetes.io/master:NoSchedule
+```
+
 
 
 
@@ -16,7 +32,7 @@
 taint      [teɪnt]           污点
 toleration [ˌtɑːləˈreɪʃn]     容忍
 
-taint       代表污点    作用在  node  上；
+taint       代表污点    作用在   node  上；
 toleration  代表容忍度   作用在  pod    上，是否能够容忍 node 上的 taint；
 ```
 
@@ -26,6 +42,18 @@ toleration  代表容忍度   作用在  pod    上，是否能够容忍 node �
 Taint 使节点node能够排斥一类特定的 pod。
 
 Taint 和 toleration 相互配合，可以用来避免 pod 被分配到不合适的节点上。每个节点上都可以应用一个或多个 taint ，这表示对于那些不能容忍这些 taint 的 pod，是不会被该节点接受的。如果将 toleration 应用于 pod 上，则表示这些 pod 可以（但不要求）被调度到具有匹配 taint 的节点上。
+```
+
+
+
+```
+污点（ taints） 是 定义 在 节点 上
+用于让节点拒绝将Pod调运行于其上， 
+除非该Pod对象具有接纳节点污点的容忍度
+```
+
+```
+tolerations 是定义在Pod对象上用于配置其可容忍的节点污点
 ```
 
 
@@ -336,10 +364,6 @@ kubectl  get  node 192.168.3.101  --output=jsonpath={.spec.taints}
 
 不如说 为pod的toleration 匹配某个或某组node 上的taint
 
-如果pod 中的toleration 没有匹配到任何一个node 的 taint ，那么这个toleration 
-
-是没有意义的，不会对调度造成任何影响或干预
-
 
 
 ##### 说明2
@@ -375,6 +399,16 @@ kubectl  get pod myapp-pod  -o json | jq .spec.tolerations
 ```
 
 
+
+-----------
+
+```
+kubectl -n kube-system get pod kube-apiserver-192.168.3.101  --output=jsonpath={.spec.tolerations}
+```
+
+```
+[map[effect:NoExecute operator:Exists]]
+```
 
 
 
@@ -502,7 +536,7 @@ kubectl  get  node 192.168.3.101 -o json | jq .spec.taints
 
 第一种 
 
-operator 字段值为 Equal      要匹配的taint 的 value 如果不为空     使用Equal 的情况下 需要填写value
+operator 字段值为 Equal      要匹配的taint 的 value 字段 如果不为空      使用Equal 的情况下 需要填写value
 
  
 
@@ -792,17 +826,37 @@ Kubernetes 处理多个 taint 和 toleration 的过程就像一个过滤器：�
 
 
 
+ex1
 
-
-pod 
+```
+pod  toleration
 
 t1  t2  t3  t4   t5                      
 
 
 
-node 
+node  taint 
 
- t1 t2 t7 t8
+t1 t2 t7 t8
+```
+
+ex2
+
+```
+pod  toleration
+
+无                    
+
+
+
+node  taint 
+
+t1 t2 t7 t8
+```
+
+
+
+
 
 
 
@@ -1103,7 +1157,7 @@ EOF
 
 ```
 kubectl  create  -f pod.yaml
-kuebctl get pod post-pod -w
+kubectl get pod post-pod -w
 ```
 
 
@@ -1336,12 +1390,6 @@ effect 值为 `NoExecute` 的taint，它会影响已经在节点上运行的 pod
 
 
 
-
-
-
-
-
-
 ```
 如果 pod 能够忍受effect 值为 NoExecute 的 taint，而且指定了 tolerationSeconds，则 pod 还能在这个节点上继续运行这个指定的时间长度。 ex5
 ```
@@ -1412,7 +1460,7 @@ kubectl taint node 192.168.3.101 t3=t3-v:NoSchedule t4:NoExecute
 
 
 
-在添加taint 后 30秒 会被删除
+在添加taint 后 10秒 会被删除
 
 
 
@@ -1781,6 +1829,7 @@ kubectl  get pod  test-pod
 
 
 ```
+kubectl patch node 192.168.3.101 -p '{"spec":{"taints":[]}}'
 kubectl taint node   192.168.3.101   node-role.kubernetes.io/master:NoSchedule-
 kubectl taint node   192.168.3.101   node-role.kubernetes.io/master:NoSchedule
 ```
@@ -1815,6 +1864,12 @@ kubectl  -n kube-system  get pod -l k8s-app=metrics-server  -w
 ```
 
 
+
+---------------------
+
+```
+kubectl  delete -f /opt/metrics-yaml/1.8+/
+```
 
 
 
@@ -1875,8 +1930,10 @@ spec:
 
 
 
+
+
 ```
-kubectl  apply  -f /opt/metrics-yaml/1.8+/metrics-server-deployment.yaml
+kubectl  apply  -f /opt/metrics-yaml/1.8+/
 ```
 
 
