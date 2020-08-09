@@ -1040,6 +1040,7 @@ kubeadm  reset -f
 rm -rf /etc/kubernetes
 rm -rf /var/lib/kubelet
 rm -rf /root/.kube
+rm -rf /etc/cni/net.d/*
 ```
 
 

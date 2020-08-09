@@ -12,7 +12,7 @@ api server 对外提供服务
 
 
 
-使用kubeadm 安装后   之前文档中执行的如下命令就是 复制一个 kubeconfig 文件 给 kubectl 使用 这个文件是kubeadm创建好的
+使用kubeadm 安装后 会自动创建一个kubeconfig 文件  之前文档中执行的如下命令就是 复制一个 kubeconfig 文件 给 kubectl 使用 这个文件是kubeadm创建好的
 
 ```
 mkdir  /root/.kube
@@ -109,7 +109,7 @@ diff /etc/kubernetes/pki/ca.crt  /opt/test.crt
 
 
 
-##### 5  查看 kubeconfig  中名字为  kubernetes-admin 的用户的信息
+##### 5  查看 kubeconfig  中名字为  kubernetes-admin 的user的信息
 
 ```
 users:
@@ -139,17 +139,12 @@ echo 'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURFekNDQWZ1Z0F3SUJBZ0lJYmlkVTF3R2
 
 ```
 openssl x509  -noout -subject -issuer  -in  /opt/client.crt 
+```
+
+
+
+```
 subject= /O=system:masters/CN=kubernetes-admin
-issuer= /CN=kubernetes
-```
-
-
-
-这个证书就是由 这个客户端证书就是由  /etc/kubernetes/pki/ca.crt 签发的
-
-```
-openssl x509  -noout -subject -issuer  -in  /etc/kubernetes/pki/ca.crt
-subject= /CN=kubernetes
 issuer= /CN=kubernetes
 ```
 
@@ -212,7 +207,7 @@ openssl x509  -noout -subject   -in  /opt/client.crt
 
 
 
-O 被k8s 识别为用户  CN 被识别为组
+O 被k8s 识别为组   CN 被识别为用户
 
 ```
 subject= /O=system:masters/CN=kubernetes-admin
@@ -222,13 +217,9 @@ subject= /O=system:masters/CN=kubernetes-admin
 
 
 
-```
-kubectl get clusterrolebinding -o custom-columns='Name:metadata.name,RoleRef:roleRef,Subjects:subjects'  -n kube-system | grep 'system:bootstrappers:kubeadm:default-node-token'
-```
 
 
-
-查找哪些 clusterrolebinding中   有名字为        kubernetes-admin   的subject   无论什么类型的subject
+查找哪些 clusterrolebinding中   有名字为      kubernetes-admin   的subject   无论什么类型的subject
 
 ```
 kubectl get clusterrolebinding -o custom-columns='Name:metadata.name,RoleRef:roleRef.name,Subjects:subjects' | grep 'kubernetes-admin'
@@ -258,14 +249,75 @@ kubectl get clusterrolebinding -o custom-columns='Name:metadata.name,RoleRef:rol
 
 
 
+
+
+```
+kubectl get clusterrolebinding cluster-admin  -o yaml
+```
+
+
+
+```
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  creationTimestamp: "2020-07-03T02:03:09Z"
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  managedFields:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:rbac.authorization.kubernetes.io/autoupdate: {}
+        f:labels:
+          .: {}
+          f:kubernetes.io/bootstrapping: {}
+      f:roleRef:
+        f:apiGroup: {}
+        f:kind: {}
+        f:name: {}
+      f:subjects: {}
+    manager: kube-apiserver
+    operation: Update
+    time: "2020-07-03T02:03:09Z"
+  name: cluster-admin
+  resourceVersion: "626308"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/cluster-admin
+  uid: 9b5802d1-029c-40e6-85f9-ca0ed7a05869
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:masters
+```
+
+
+
 ```
 cluster-admin
 ```
 
 
 
+--------------
+
 ```
 kubectl  get clusterrole cluster-admin  -o yaml
+```
+
+
+
+
+
+```
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:

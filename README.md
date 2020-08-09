@@ -40,7 +40,10 @@ Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规�
       - 2 [查看kubeadm init 输出信息](./kubelet/output.md)
       - 3 [使用kubeadm join 添加一个node](./kubelet/kubeadm-join-node.md)
       - 4  [观察kubeadm设置的bootstrap token权限](./kubelet/kubelet.md)
-      - 5  [add node 手动](./kubelet/add-node.md)
+      - 5  [add node-1](./kubelet/add-node-1.md)
+      - 6  [add node-2](./kubelet/add-node-2.md)
+      - 7  [add node-3](./kubelet/add-node-3.md)
+      - 8  [add node-4](./kubelet/add-node-4.md)
       
   - 第五式  拆解kube-proxy
     
@@ -68,17 +71,32 @@ Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规�
 
 
 - 必要理论+实践: 
+  
   - 1  架构概览
-      - [架构概览](./arch/arch.md)
-
+  
+- [架构概览](./arch/arch.md)
+      
+  
   - 2  taint and toleration
       - [环境部署](./taints-tolerations/etcd-certs.md)
       - [taints and tolerations](./taints-tolerations/taints-tolerations.md)
   - 3  名词简要解释
+    
       - [words](./word/word.md)
+  
+- 4 网络
+  
+  - [network](./network/network.md)
+  
+  > https://v1-18.docs.kubernetes.io/docs/concepts/cluster-administration/networking/
+  
+- 网络工具集: 
+    - [tcpdump](./net-tools/tcpdump.md)
+    - [路由](./net-tools/route.md)
 
-   
-
+- 补充 效率提升: 
+  
+    - [补充   将重复操作固化到一个 qcow2 镜像](./qcow2/qcow2.md)
 
 
 > http://www.howtopronounce.cc
@@ -98,19 +116,6 @@ Kubernetes 是谷歌开源的容器集群管理系统，是 Google 多年大规�
 
 
 > https://kubernetes.io/docs/setup/production-environment/container-runtimes/#docker
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

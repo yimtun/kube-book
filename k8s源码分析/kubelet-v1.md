@@ -668,6 +668,12 @@ https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-tls-bo
 
 
 
+```
+curl  https://192.168.3.101:6443/api/v1/nodes/192.168.3.101  --cert /etc/kubernetes/pk/apiserver-kubelet-client.crt   --key   /etc/kubernetes/pki/apiserver-kubelet-client.key --cacert /etc/kubernetes/pki/ca.crt 
+```
+
+
+
 
 
 ```
